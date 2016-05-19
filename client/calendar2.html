@@ -3,11 +3,8 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <script type="text/javascript" src="/js/lib/dummy.js"></script>
+<title>Frontier JQuery Calendar</title>
 
-<title>일정관리</title>
-<link rel="stylesheet" type="text/css" href="/css/result-light.css">
 <!-- Include CSS for JQuery Frontier Calendar plugin (Required for calendar plugin) -->
 <link rel="stylesheet" type="text/css" href="css/frontierCalendar/jquery-frontier-cal-1.3.2.css" />
 
@@ -16,7 +13,7 @@
 
 <!-- Include CSS for JQuery UI (Required for calendar plugin.) -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui/smoothness/jquery-ui-1.8.1.custom.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
 <!--
 Include JQuery Core (Required for calendar plugin)
 ** This is our IE fix version which enables drag-and-drop to work correctly in IE. See README file in js/jquery-core folder. **
@@ -40,10 +37,97 @@ Include JQuery Core (Required for calendar plugin)
 <script type="text/javascript" src="js/lib/jshashtable-2.1.js"></script>
 
 <!-- Include JQuery Frontier Calendar plugin -->
-<script type="text/javascript" src="js/frontierCalendar/jquery-frontier-cal-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/frontierCalendar/jquery-frontier-cal-1.3.2.js"></script>
+<!-- script type="text/javascript" src="js/frontierCalendar/jquery-frontier-cal-1.3.2.min.js"></script-->
+
+<script language="javascript"> 
+		function openWin(_url, _width, _height) { 
+			  window.open(_url, "popup", "width="+_width+", height="+_height+", resizable=no, scrollbars=no") ; 
+		} 
+	/*
+	옵션 설명
+	menubar yes/no : 윈도우 menubar 표시여부 
+	toolbar yes/no : 윈도우 toolbar 표시여부 
+	location yes/no : 윈도우 location box 표시여부 
+	directories yes/no : 윈도우 directory button들의 표시여부 
+	status yes/no : 윈도우 상태표시바 표시여부 
+	scrollbars yes/no : 윈도우 scrollbar 표시여부 
+	resizable yes/no : 윈도우 크기가 조정될 수 있는 지 여부
+	width : 윈도우 너비 
+	height : 윈도우 높이
+	*/
+		</script> 
+		
+		
+<style>
+.left {
+   display:inline-block;
+   width:200px;
+}
+.main {
+   display:inline-block;
+   width: 50%;
+
+}
+.timeline {
+   display:block;
+   width: 300px;
+   height: 40px;
+   line-height: 40px;
+   color: white;
+   text-align: center;
+   margin: 15px 0;
+
+}
+.div_button {
+   display: inline-block;
+   width: 150px;
+   height: 25px;
+   line-height: 25px;
+   color: #000;
+   border: solid 1px #000;
+   text-align: center;
+   margin: 15px;
+}
+.private {
+   background-color: purple;
+}
+.public {
+   background-color: grey;
+}
+</style>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+   
+
+   $('#public_click').click( function(){
+      if( $('.public').css("display") == "none")
+      {
+         $('.public').css("display", "");
+      }
+      else
+      {
+         $('.public').css("display", "none");
+      }
+
+   });
+
+
+   $('#private_click').click( function(){
+      if( $('.private').css("display") == "none")
+      {
+         $('.private').css("display", "");
+      }
+      else
+      {
+         $('.private').css("display", "none");
+      }
+   });
+});
+</script>
 
 </head>
-
 <body style="background-color: #aaaaaa;">
 
 <!-- Some CSS for our example. (Not required for calendar plugin. Used for example.)-->
@@ -55,10 +139,11 @@ body font-size to 62.5% isn't an option, or not one you want, you can set the fo
 to 1em or set it to px.
 http://osdir.com/ml/jquery-ui/2009-04/msg00071.html
 */
-
-documentbody { font-size: 80.5%; }
+body { font-size: 62.5%; }
 .shadow {
-	-webkit-box-shadow: 3px 3px 4px white;
+	-moz-box-shadow: 3px 3px 4px #aaaaaa;
+	-webkit-box-shadow: 3px 3px 4px #aaaaaa;
+	box-shadow: 3px 3px 4px #aaaaaa;
 	/* For IE 8 */
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
 	/* For IE 5.5 - 7 */
@@ -67,41 +152,6 @@ documentbody { font-size: 80.5%; }
 </style>
 
 <script type="text/javascript">
-
-
-
-	 $( document ).ready(function() {
-   
-
-     $('#public_click').click( function(){
-      if(calcalValue=public){
-      	if(
-      		$('JFrontierCal-Agenda-Item').css("display") == "none")
-      {
-         $('.JFrontierCal-Agenda-Item').css("display", "");
-      }
-      else
-      {
-         $('.JFrontierCal-Agenda-Item').css("display", "none");
-      }
-
-    });
-
-
-    $('#private_click').click( function(){
-    	if(calcalValue=private){
-      if( $('.JFrontierCal-Agenda-Item').css("display") == "none")
-      {
-         $('.JFrontierCal-Agenda-Item).css("display", "");
-      }
-      else
-      {
-         $('.JFrontierCal-Agenda-Item').css("display", "none");
-      }
-    });
- });
-    
-    
 $(document).ready(function(){	
 
 	var clickDate = "";
@@ -156,7 +206,7 @@ $(document).ready(function(){
 		}
 		
 		var displayData = "";
-		var calcal = agendaItem.calcal; /*수정 수정 개인일정 표시 */
+		var calcal =agendaItem.calcal;
 		var title = agendaItem.title;
 		var startDate = agendaItem.startDate;
 		var endDate = agendaItem.endDate;
@@ -224,8 +274,6 @@ $(document).ready(function(){
 	 * Called when user clicks day cell
 	 * use reference to plugin object to add agenda item
 	 */
-	 
-	 
 	function myDayClickHandler(eventObj){
 		// Get the Date of the day that was clicked from the event object
 		var date = eventObj.data.calDayDate;
@@ -346,38 +394,13 @@ $(document).ready(function(){
 	/**
 	 * Initialize iCal test button
 	 */
-	 
-	 /* 한번 시도 */
-	 $( document ).ready(function() {
-   
-
-     $('#public_click').click( function(){
-      if( $('.public').css("display") == "none")
-      {
-         $('.public').css("display", "");
-      }
-      else
-      {
-         $('.public').css("display", "none");
-      }
-
-    });
-
-
-    $('#private_click').click( function(){
-      if( $('.private').css("display") == "none")
-      {
-         $('.private').css("display", "");
-      }
-      else
-      {
-         $('.private').css("display", "none");
-      }
-    });
- });
-
-/* 한번 시도당 */
-
+	$("#BtnICalTest").button();
+	$("#BtnICalTest").click(function() {
+		// Please note that in Google Chrome this will not work with a local file. Chrome prevents AJAX calls
+		// from reading local files on disk.		
+		jfcalplugin.loadICalSource("#mycal",$("#iCalSource").val(),"html");	
+		return false;
+	});	
 
 	/**
 	 * Initialize add event modal form
@@ -389,8 +412,6 @@ $(document).ready(function(){
 		modal: true,
 		buttons: {
 			'Add Event': function() {
-				/* 여기에 무엇을 추가?? */
-				var calcal = calcalValue;
 
 				var what = jQuery.trim($("#what").val());
 			
@@ -456,7 +477,7 @@ $(document).ready(function(){
 					// add new event to the calendar
 					jfcalplugin.addAgendaItem(
 						"#mycal",
-						calcal,
+						$('#calcal option:selected').val(),
 						what,
 						startDateObj,
 						endDateObj,
@@ -588,9 +609,8 @@ $(document).ready(function(){
 		},
 		open: function(event, ui){
 			if(clickAgendaItem != null){
-				var calcal = clickAgendaItem.calcal;  /* 개인일정 추가 */
+				var calcal = clickAgendaItem.calcal;
 				var title = clickAgendaItem.title;
-				
 				var startDate = clickAgendaItem.startDate;
 				var endDate = clickAgendaItem.endDate;
 				var allDay = clickAgendaItem.allDay;
@@ -635,23 +655,38 @@ $(document).ready(function(){
 	});
 	
 });
-
-
 </script>
+
 <h1 style="font-size: 30px; font-weight: bold;">일정관리</h1>
+
 <div id="tabs">
-		<div id="tabs-2">
+
+	<div id="tabs-2">
+
 		<div id="example" style="margin: auto; width:80%;">
-				<br>
-				<br><br>
+		
+		<br>
+		
+		<div class="shadow" style="border: 1px solid #aaaaaa; padding: 3px;">
+			<b>
+			Click the calendar to add some agenda items.
+			<br><br>
+			Please note that Chrome prevents AJAX calls from reading local files on disk so the iCal example will not work. Try in Firefox, Safari, Opera, or IE.
+			For Chrome it should work when the iCal file is hosted online from your domain.
+			</b>
+		</div>
+		
+		<br><br>
 
 		<div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:3px; vertical-align: middle; white-space:nowrap; overflow: hidden;">
-			<button id="BtnPreviousMonth">이전 달</button>
-			<button id="BtnNextMonth">다음 달</button>
+			<button id="BtnPreviousMonth">Previous Month</button>
+			<button id="BtnNextMonth">Next Month</button>
 			&nbsp;&nbsp;&nbsp;
 			Date: <input type="text" id="dateSelect" size="20"/>
 			&nbsp;&nbsp;&nbsp;
-		
+			<button id="BtnDeleteAll">Delete All</button>
+			<button id="BtnICalTest">iCal Test</button>
+			<input type="text" id="iCalSource" size="30" value="extra/fifa-world-cup-2010.ics"/>
 		</div>
 
 		<br>
@@ -661,18 +696,12 @@ $(document).ready(function(){
 		Height will be calculated by aspect ratio. Basically all day cells will be as tall
 		as they are wide.
 		-->
-		
-	
-	
+		<div id="mycal"></div>
 
-
-
-    	<div id="mycal"></div>
+		</div>
 
 		<!-- debugging-->
 		<div id="calDebug"></div>
-		
-
 
 		<!-- Add event modal form -->
 		<style type="text/css">
@@ -681,21 +710,15 @@ $(document).ready(function(){
 			.ui-dialog .ui-state-error { padding: .3em; }
 			.validateTips { border: 1px solid transparent; padding: 0.3em; }
 		</style>
-		<div id="add-event-form" title="일정추가">
-			<p class="validateTips">일정을 채워 놓으세요.</p>
+		<div id="add-event-form" title="Add New Event">
+			<p class="validateTips">All form fields are required.</p>
 			<form>
 			<fieldset>
-			  
-			  <!-- <select id="div_button" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .4em;">
-				  		<option id="private_click" SELECTED>개인일정</option>
-				  		<option id="public_click" SELECTED>공식일정</option> -->
-				
-				<label>일정 분류</label>
-						<select id="calcal" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .4em;">
-							<option value="private" SELECTED>공식일정</option>
-							<option value="public">개인일정</option>
-							
-				<label for="name">일정 내용</label>
+				<label for="calcal">개인/공식 일정</label>
+				<select id="calcal" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .4em;">
+								<option value="private" SELECTED>개인일정</option>
+								<option value="public">공식일정</option>
+				<label for="name">What?</label>
 				<input type="text" name="what" id="what" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .4em;"/>
 				<table style="width:100%; padding:5px;">
 					<tr>
@@ -786,7 +809,7 @@ $(document).ready(function(){
 				<table>
 					<tr>
 						<td>
-							<label>배경 색</label>
+							<label>Background Color</label>
 						</td>
 						<td>
 							<div id="colorSelectorBackground"><div style="background-color: #333333; width:30px; height:30px; border: 2px solid #000000;"></div></div>
@@ -794,7 +817,7 @@ $(document).ready(function(){
 						</td>
 						<td>&nbsp;&nbsp;&nbsp;</td>
 						<td>
-							<label>글자 색</label>
+							<label>Text Color</label>
 						</td>
 						<td>
 							<div id="colorSelectorForeground"><div style="background-color: #ffffff; width:30px; height:30px; border: 2px solid #000000;"></div></div>
@@ -811,14 +834,18 @@ $(document).ready(function(){
 		</div>		
 
 		<p>&nbsp;</p>
-	
-
 
 	</div><!-- end example tab -->
 
 
+</div><!-- end tabs -->
 
-<div class="left">
+<p>&nbsp;</p>
+
+	<div> 
+		<a href="javascript:openWin('popup2.html','500','300')">달력 보기</a> 
+	</div>   
+	<div class="left">
       <div class="div_button" id="public_click">공통일정 보기</div>
       <div class="div_button" id="private_click">개인일정 보기</div>
 </div>
@@ -832,15 +859,5 @@ $(document).ready(function(){
 </div>
 
 
-<a id="download" download="일정관리.png">Download as image</a>
-
-
-<br> 
-	<div> 
-		<a href="javascript:openWin('popup2.html','500','300')">달력 보기</a> 
-	</div>   
-
 </body>
 </html>
-
-/*html2canvas 로 한 영역을 canvas로 만들고 FileSaver 로 저장
